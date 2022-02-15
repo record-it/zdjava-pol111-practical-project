@@ -20,10 +20,10 @@ public class ConsoleNBPApp {
             switch (table) {
                 case TABLE_A:
                 case TABLE_B:
-                    System.out.println(String.format("%-35s %5s %15.4f", rate.getCurrency(), rate.getCode(), rate.getMid()));
+                    System.out.println(String.format("%-45s %5s %15.4f", rate.getCurrency(), rate.getCode(), rate.getMid()));
                     break;
                 case TABLE_C:
-                    System.out.println(String.format("%-35s %5s %15.4f", rate.getCurrency(), rate.getCode(), rate.getBid()));
+                    System.out.println(String.format("%-45s %5s %15.4f", rate.getCurrency(), rate.getCode(), rate.getBid()));
             }
         }
     }
