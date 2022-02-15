@@ -29,6 +29,5 @@ public class App {
         for (Rate rate: rateTable.getRates()) {
             System.out.println(String.format("%-35s %5s %15.4f", rate.getCurrency(), rate.getCode(), rate.getMid()));
         }
-
     }
 }
