@@ -34,8 +34,10 @@ public class ConsoleNBPApp {
     }
 
     private static void handleOptionTable(Table table) {
+        System.out.println("Wpisz datę notowania:");
+        String date = scanner.nextLine();
         try {
-            printTable(service.findAll(table, LocalDate.now()), table);
+            printTable(service.findAll(table, LocalDate.parse(date)), table);
         } catch (Exception e) {
             System.out.println("Błąd połączenia, nie można odczytać danych z sieci!");
             System.out.println("Bład : " + e.getMessage());
