@@ -5,9 +5,10 @@ import nbpapi.Rate;
 import nbpapi.Table;
 import repository.RateRepository;
 import repository.RateRepositoryNBP;
-import repository.RateRepositoryNBPApi;
+import service.ServiceNBP;
+import service.ServiceNBPApi;
 
-import java.io.IOException;
+import java.security.InvalidParameterException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
@@ -15,30 +16,48 @@ import java.util.Scanner;
 public class ConsoleNBPApp {
     private static final Scanner scanner = new Scanner(System.in);
     private static final RateRepository rates = new RateRepositoryNBP();
+    private static final ServiceNBP service = new ServiceNBPApi(rates);
 
     private static void printTable(List<Rate> list, Table table) {
         for (Rate rate : list) {
             switch (table) {
                 case TABLE_A:
                 case TABLE_B:
-                    System.out.println(String.format("%-45s %5s %15.4f", rate.getCurrency(), rate.getCode(), rate.getMid()));
+                    System.out.println(java.lang.String.format("%-45s %5s %15.4f", rate.getCurrency(), rate.getCode(), rate.getMid()));
                     break;
                 case TABLE_C:
-                    System.out.println(String.format("%-45s %5s %15.4f", rate.getCurrency(), rate.getCode(), rate.getBid()));
+                    System.out.println(java.lang.String.format("%-45s %5s %15.4f", rate.getCurrency(), rate.getCode(), rate.getBid()));
             }
         }
     }
 
     private static void handleOptionTable(Table table) {
         try {
-            printTable(rates.findByTableAndDate(table, LocalDate.now()), table);
+            printTable(service.findAll(table, LocalDate.now()), table);
         } catch (Exception e) {
             System.out.println("Błąd połączenia, nie można odczytać danych z sieci!");
             System.out.println("Bład : " + e.getMessage());
         }
     }
 
-    public static void main(String[] args) {
+    private static void exchange(){
+        System.out.println("Wpisz kwotę:");
+        double amount = scanner.nextDouble();
+        scanner.nextLine();
+        System.out.println("Wpisz kod waluty kwoty:");
+        java.lang.String sourceCode = scanner.nextLine();
+        System.out.println("Wpisz kod waluty docelowej:");
+        java.lang.String targetCode = scanner.nextLine();
+        try {
+            double result = service.calc(amount, sourceCode, targetCode);
+            System.out.println("Kwota po wymianie: " + result);
+        } catch (Exception e){
+            System.out.println("Problem z siecią lub nieznany kod waluty");
+        }
+
+    }
+
+    public static void main(java.lang.String[] args) {
         Menu menu = Menu.builder()
                 .items(
                         List.of(
@@ -53,6 +72,10 @@ public class ConsoleNBPApp {
                                 MenuItem.builder()
                                         .label("Pobierz tabelę A")
                                         .action(() -> handleOptionTable(Table.TABLE_A))
+                                        .build(),
+                                MenuItem.builder()
+                                        .label("Wymień walutę")
+                                        .action(() -> exchange())
                                         .build(),
                                 MenuItem.builder()
                                         .label("Wyjście")

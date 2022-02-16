@@ -1,11 +1,8 @@
 package repository;
-
 import nbpapi.Rate;
 import nbpapi.RateTable;
 import nbpapi.Table;
 import nbpapi.URIGenerator;
-import postapi.Post;
-
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;

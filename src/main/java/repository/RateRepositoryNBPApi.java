@@ -23,7 +23,7 @@ public class RateRepositoryNBPApi implements RateRepository{
                 .uri(URIGenerator.currentTableJson(table))
                 .GET()
                 .build();
-        final HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        final HttpResponse<java.lang.String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         ObjectMapper mapper = new ObjectMapper();
         final List<RateTable> rateTableList = mapper.readValue(response.body(), new TypeReference<List<RateTable>>() {
         });

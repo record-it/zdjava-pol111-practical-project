@@ -3,21 +3,21 @@ package nbpapi;
 import java.util.List;
 
 public class RateTable {
-    private String table;
-    private String no;
-    private String effectiveDate;
-    private String tradingDate;
+    private java.lang.String table;
+    private java.lang.String no;
+    private java.lang.String effectiveDate;
+    private java.lang.String tradingDate;
     private List<Rate> rates;
 
-    public String getTable() {
+    public java.lang.String getTable() {
         return table;
     }
 
-    public String getNo() {
+    public java.lang.String getNo() {
         return no;
     }
 
-    public String getEffectiveDate() {
+    public java.lang.String getEffectiveDate() {
         return effectiveDate;
     }
 
@@ -25,7 +25,7 @@ public class RateTable {
         return rates;
     }
 
-    public String getTradingDate() {
+    public java.lang.String getTradingDate() {
         return tradingDate;
     }
 }

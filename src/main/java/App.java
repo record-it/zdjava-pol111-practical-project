@@ -11,13 +11,13 @@ import java.net.http.HttpResponse;
 import java.util.List;
 
 public class App {
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(java.lang.String[] args) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URIGenerator.currentTableJson(Table.TABLE_A))
                 .GET()
                 .build();
-        final HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        final HttpResponse<java.lang.String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         ObjectMapper mapper = new ObjectMapper();
         final List<RateTable> rateTableList = mapper.readValue(response.body(), new TypeReference<List<RateTable>>() {
         });
@@ -27,7 +27,7 @@ public class App {
         System.out.println("Data ważności: \t" + rateTable.getEffectiveDate());
         System.out.println("=========================================================");
         for (Rate rate: rateTable.getRates()) {
-            System.out.println(String.format("%-35s %5s %15.4f", rate.getCurrency(), rate.getCode(), rate.getMid()));
+            System.out.println(java.lang.String.format("%-35s %5s %15.4f", rate.getCurrency(), rate.getCode(), rate.getMid()));
         }
     }
 }

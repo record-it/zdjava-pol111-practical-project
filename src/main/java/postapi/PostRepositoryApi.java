@@ -2,9 +2,6 @@ package postapi;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import nbpapi.RateTable;
-import nbpapi.URIGenerator;
-
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;

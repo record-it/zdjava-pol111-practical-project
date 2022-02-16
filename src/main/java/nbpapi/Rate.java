@@ -1,17 +1,17 @@
 package nbpapi;
 
 public class Rate {
-    private String currency;
-    private String code;
+    private java.lang.String currency;
+    private java.lang.String code;
     private double mid;
     private double bid;
     private double ask;
 
-    public String getCurrency() {
+    public java.lang.String getCurrency() {
         return currency;
     }
 
-    public String getCode() {
+    public java.lang.String getCode() {
         return code;
     }
 
