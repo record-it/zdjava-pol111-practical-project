@@ -4,6 +4,7 @@ import controller.MenuItem;
 import nbpapi.Rate;
 import nbpapi.Table;
 import repository.RateRepository;
+import repository.RateRepositoryNBP;
 import repository.RateRepositoryNBPApi;
 
 import java.io.IOException;
@@ -13,7 +14,7 @@ import java.util.Scanner;
 
 public class ConsoleNBPApp {
     private static final Scanner scanner = new Scanner(System.in);
-    private static final RateRepository rates = new RateRepositoryNBPApi();
+    private static final RateRepository rates = new RateRepositoryNBP();
 
     private static void printTable(List<Rate> list, Table table) {
         for (Rate rate : list) {
