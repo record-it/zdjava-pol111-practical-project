@@ -5,6 +5,7 @@ import nbpapi.Rate;
 import nbpapi.Table;
 import repository.RateRepository;
 import repository.RateRepositoryNBP;
+import repository.RateRepositoryNBPCached;
 import service.ServiceNBP;
 import service.ServiceNBPApi;
 
@@ -16,7 +17,7 @@ import java.util.Scanner;
 
 public class ConsoleNBPApp {
     private static final Scanner scanner = new Scanner(System.in);
-    private static final RateRepository rates = new RateRepositoryNBP();
+    private static final RateRepository rates = new RateRepositoryNBPCached();
     private static final ServiceNBP service = new ServiceNBPApi(rates);
 
     private static void printTable(List<Rate> list, Table table) {
@@ -42,6 +43,9 @@ public class ConsoleNBPApp {
     }
 
     private static void exchange(){
+        //TODO wyświetli listę kodów walut w np. 5 kolumnach
+        //USD   EUR   PLN   YYY   UUU
+        //BAT   XXX   XXX
         System.out.println("Wpisz kwotę:");
         //TODO oprogramuj sprawdzenie czy poprawna dana liczbowa
         double amount = scanner.nextDouble();

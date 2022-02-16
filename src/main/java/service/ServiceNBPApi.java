@@ -9,12 +9,21 @@ import java.security.InvalidParameterException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class ServiceNBPApi implements ServiceNBP{
     private final RateRepository rates;
 
     public ServiceNBPApi(RateRepository rates) {
         this.rates = rates;
+    }
+
+    @Override
+    public List<String> findAllCodes(Table table) throws IOException, InterruptedException {
+        return this.rates.findByTableAndDate(Table.TABLE_A, null)
+                .stream()
+                .map(Rate::getCode)
+                .collect(Collectors.toList());
     }
 
     @Override
