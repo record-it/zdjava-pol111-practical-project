@@ -8,6 +8,7 @@ import repository.RateRepositoryNBP;
 import service.ServiceNBP;
 import service.ServiceNBPApi;
 
+import java.io.IOException;
 import java.security.InvalidParameterException;
 import java.time.LocalDate;
 import java.util.List;
@@ -42,6 +43,7 @@ public class ConsoleNBPApp {
 
     private static void exchange(){
         System.out.println("Wpisz kwotę:");
+        //TODO oprogramuj sprawdzenie czy poprawna dana liczbowa
         double amount = scanner.nextDouble();
         scanner.nextLine();
         System.out.println("Wpisz kod waluty kwoty:");
@@ -51,8 +53,12 @@ public class ConsoleNBPApp {
         try {
             double result = service.calc(amount, sourceCode, targetCode);
             System.out.println("Kwota po wymianie: " + result);
-        } catch (Exception e){
-            System.out.println("Problem z siecią lub nieznany kod waluty");
+        } catch (InvalidParameterException e){
+            System.out.println("kod waluty");
+        } catch (IOException e){
+            //TODO komunikaty na wypadek błedu sieci
+        } catch (InterruptedException e) {
+            //TODO komunikat na wypadek błędu przerwania
         }
 
     }
