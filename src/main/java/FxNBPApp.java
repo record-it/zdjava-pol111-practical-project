@@ -26,9 +26,9 @@ public class FxNBPApp extends Application {
     private TextField amount = new TextField();
     private ComboBox<Rate> sourceCode = new ComboBox<>();
     private ComboBox<Rate> targetCode = new ComboBox<>();
+    private ComboBox<Table> table = new ComboBox<>();
     private Label result = new Label("0,0");
     private Button runExchange = new Button("Przelicz");
-
     private RateRepository repository = new RateRepositoryNBPCached();
     private ServiceNBP serviceNBP = new ServiceNBPApi(repository);
 
@@ -62,13 +62,16 @@ public class FxNBPApp extends Application {
         });
         root.setSpacing(10);
         root.setPadding(new Insets(10));
-        root.getChildren().addAll(amountLabel,
+        root.getChildren().addAll(
+                table,
+                amountLabel,
                 amount,
                 sourceCode,
                 targetCode,
                 result,
                 runExchange
         );
+        table.getItems().addAll(Table.values());
         root.setAlignment(Pos.TOP_CENTER);
         try {
             sourceCode.getItems().addAll(serviceNBP.findAll(Table.TABLE_A, LocalDate.now()));

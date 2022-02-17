@@ -46,4 +46,9 @@ public class ServiceNBPApi implements ServiceNBP{
     public List<Rate> findAll(Table table, LocalDate date) throws IOException, InterruptedException {
         return rates.findByTableAndDate(table, date);
     }
+
+    @Override
+    public List<Rate> findAll(Table table) throws IOException, InterruptedException {
+        return rates.findByTableLast(table);
+    }
 }
