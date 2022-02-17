@@ -4,7 +4,6 @@ import controller.MenuItem;
 import nbpapi.Rate;
 import nbpapi.Table;
 import repository.RateRepository;
-import repository.RateRepositoryNBP;
 import repository.RateRepositoryNBPCached;
 import service.ServiceNBP;
 import service.ServiceNBPApi;
@@ -21,6 +20,10 @@ public class ConsoleNBPApp {
     private static final ServiceNBP service = new ServiceNBPApi(rates);
 
     private static void printTable(List<Rate> list, Table table) {
+        if (list.isEmpty()) {
+            System.out.println("Brak tabeli w tym dniu.");
+            return;
+        }
         for (Rate rate : list) {
             switch (table) {
                 case TABLE_A:
@@ -28,7 +31,7 @@ public class ConsoleNBPApp {
                     System.out.println(java.lang.String.format("%-45s %5s %15.4f", rate.getCurrency(), rate.getCode(), rate.getMid()));
                     break;
                 case TABLE_C:
-                    System.out.println(java.lang.String.format("%-45s %5s %15.4f", rate.getCurrency(), rate.getCode(), rate.getBid()));
+                    System.out.println(java.lang.String.format("%-45s %5s %15.4 f%15.4", rate.getCurrency(), rate.getCode(), rate.getBid(), rate.getAsk()));
             }
         }
     }
@@ -38,13 +41,14 @@ public class ConsoleNBPApp {
         String date = scanner.nextLine();
         try {
             printTable(service.findAll(table, LocalDate.parse(date)), table);
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.out.println("Błąd połączenia, nie można odczytać danych z sieci!");
-            System.out.println("Bład : " + e.getMessage());
+        } catch (InterruptedException e) {
+            System.out.println("Przerwano przetwarzanie żądania!");
         }
     }
 
-    private static void exchange(){
+    private static void exchange() {
         //TODO wyświetli listę kodów walut w np. 5 kolumnach
         //USD   EUR   PLN   YYY   UUU
         //BAT   XXX   XXX
@@ -59,9 +63,9 @@ public class ConsoleNBPApp {
         try {
             double result = service.calc(amount, sourceCode, targetCode);
             System.out.println("Kwota po wymianie: " + result);
-        } catch (InvalidParameterException e){
-            System.out.println("kod waluty");
-        } catch (IOException e){
+        } catch (InvalidParameterException e) {
+            System.out.println("Nieznany kod waluty");
+        } catch (IOException e) {
             //TODO komunikaty na wypadek błedu sieci
         } catch (InterruptedException e) {
             //TODO komunikat na wypadek błędu przerwania
@@ -74,16 +78,16 @@ public class ConsoleNBPApp {
                 .items(
                         List.of(
                                 MenuItem.builder()
-                                        .action(() -> handleOptionTable(Table.TABLE_B))
+                                        .action(() -> handleOptionTable(Table.TABLE_A))
+                                        .label("Pobierz tabelę A")
+                                        .build(),
+                                MenuItem.builder()
                                         .label("Pobierz tabelę B")
+                                        .action(() -> handleOptionTable(Table.TABLE_B))
                                         .build(),
                                 MenuItem.builder()
                                         .label("Pobierz tabelę C")
                                         .action(() -> handleOptionTable(Table.TABLE_C))
-                                        .build(),
-                                MenuItem.builder()
-                                        .label("Pobierz tabelę A")
-                                        .action(() -> handleOptionTable(Table.TABLE_A))
                                         .build(),
                                 MenuItem.builder()
                                         .label("Wymień walutę")

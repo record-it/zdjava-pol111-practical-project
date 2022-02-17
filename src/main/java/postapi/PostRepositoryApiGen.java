@@ -5,6 +5,7 @@ import repository.ApiRepository;
 import java.io.IOException;
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 public class PostRepositoryApiGen implements PostRepository{
     private ApiRepository<Post> posts = new ApiRepository<>(Post.class);
@@ -15,7 +16,7 @@ public class PostRepositoryApiGen implements PostRepository{
         return posts.getList(URI.create(uri));
     }
 
-    public Post findById(int id) throws IOException, InterruptedException {
+    public Optional<Post> findById(int id) throws IOException, InterruptedException {
         return posts.getObject(URI.create(uri+"/"+id));
     }
 }
