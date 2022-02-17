@@ -28,7 +28,7 @@ public class ServiceNBPApi implements ServiceNBP{
 
     @Override
     public double calc(double amount, String source, String target) throws IOException, InterruptedException {
-        final List<Rate> rates = this.rates.findByTableAndDate(Table.TABLE_A, null);
+        final List<Rate> rates = this.rates.findByTableLast(Table.TABLE_A);
         final Optional<Rate> sourceRate = rates.stream()
                 .filter(rate -> rate.getCode().equals(source))
                 .findFirst();

@@ -15,4 +15,9 @@ public class Rate {
     private double mid;
     private double bid;
     private double ask;
+
+    @Override
+    public String toString(){
+        return code;
+    }
 }
