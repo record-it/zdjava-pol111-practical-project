@@ -42,20 +42,25 @@ public class FxNBPApp extends Application {
         builGUI(stage);
     }
 
+    private double calc(double amount, Rate source, Rate target){
+        return amount * source.getMid() / target.getMid();
+    }
+
     private void calcExchangeResult(){
         double input = Double.parseDouble(amount.getText());
-        try {
-            double output = serviceNBP.calc(input,
-                    sourceCode.getSelectionModel().getSelectedItem().getCode(),
-                    targetCode.getSelectionModel().getSelectedItem().getCode()
-
-            );
-            result.setText(String.format("%6.2f", output));
-        } catch (IOException e) {
-            result.setText("Błąd pobierania danych!");
-        } catch (InterruptedException e) {
-            result.setText("Przerwano połączenie z serwerem!");
-        }
+        result.setText(String.format("%8.2f", calc(input, sourceCode.getValue(), targetCode.getValue())));
+//        try {
+//            double output = serviceNBP.calc(input,
+//                    sourceCode.getSelectionModel().getSelectedItem().getCode(),
+//                    targetCode.getSelectionModel().getSelectedItem().getCode()
+//
+//            );
+//            result.setText(String.format("%6.2f", output));
+//        } catch (IOException e) {
+//            result.setText("Błąd pobierania danych!");
+//        } catch (InterruptedException e) {
+//            result.setText("Przerwano połączenie z serwerem!");
+//        }
     }
 
     private void changeCodes(){

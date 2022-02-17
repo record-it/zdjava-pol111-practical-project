@@ -20,4 +20,12 @@ public class Rate {
     public String toString(){
         return code;
     }
+
+    public double getMid(){
+        if (bid <= 0 && ask <= 0){
+            return mid;
+        } else {
+            return (ask + bid) / 2;
+        }
+    }
 }

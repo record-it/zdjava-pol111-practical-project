@@ -42,5 +42,4 @@ public class ApiRepository<T> {
         final HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         return response;
     }
-
 }
