@@ -18,6 +18,7 @@ import service.ServiceNBPApi;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 
 public class FxNBPApp extends Application {
     private VBox root = new VBox();
@@ -29,6 +30,7 @@ public class FxNBPApp extends Application {
     private ComboBox<Table> table = new ComboBox<>();
     private Label result = new Label("0,0");
     private Button runExchange = new Button("Przelicz");
+    private Button changeTable = new Button("Zmień tabelę");
     private RateRepository repository = new RateRepositoryNBPCached();
     private ServiceNBP serviceNBP = new ServiceNBPApi(repository);
 
@@ -56,7 +58,23 @@ public class FxNBPApp extends Application {
         }
     }
 
+    private void changeCodes(){
+        try {
+            final List<Rate> rates = serviceNBP.findAll(table.getValue());
+            sourceCode.getItems().clear();
+            targetCode.getItems().clear();
+            sourceCode.getItems().addAll(rates);
+            targetCode.getItems().addAll(rates);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
     private void builGUI(Stage stage){
+        changeTable.setOnAction(event -> {
+            changeCodes();
+        });
         runExchange.setOnAction(event -> {
             calcExchangeResult();
         });
@@ -64,6 +82,7 @@ public class FxNBPApp extends Application {
         root.setPadding(new Insets(10));
         root.getChildren().addAll(
                 table,
+                changeTable,
                 amountLabel,
                 amount,
                 sourceCode,

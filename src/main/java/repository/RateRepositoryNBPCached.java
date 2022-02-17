@@ -37,6 +37,8 @@ public class RateRepositoryNBPCached implements RateRepository {
 
     @Override
     public List<Rate> findByTableLast(Table table) throws IOException, InterruptedException {
-        return rates.getList(URIGenerator.currentTableJson(table)).get(0).getRates();
+        final List<Rate> rates = this.rates.getList(URIGenerator.currentTableJson(table)).get(0).getRates();
+        rates.add(RATE_PLN);
+        return  rates;
     }
 }
